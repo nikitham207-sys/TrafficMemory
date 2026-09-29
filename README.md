@@ -1,20 +1,20 @@
 # TrafficMemory 🚦🧠
 ### An AI Agent That Remembers What Actually Works on the Road
 
-> **"TrafficMemory doesn't just analyze today's traffic. It remembers what happened before, what was tried, what worked, and uses that experience when the next incident occurs."**
+> "TrafficMemory doesn't just analyze today's traffic. It remembers what happened before, what was tried, what worked, and uses that experience when the next incident occurs."
 
-TrafficMemory is a persistent traffic intelligence platform designed for municipal traffic operations centers and emergency dispatchers in **Hyderabad**. By integrating **Hindsight episodic memory**, TrafficMemory breaks away from standard naive heuristics: instead of applying static rules, it continuously recalls empirical road-corridor interventions and retains real-world outcomes so the city learns over time.
+TrafficMemory is a persistent traffic intelligence platform for municipal traffic operations centers and emergency dispatchers in Hyderabad. It uses a Hindsight-style memory layer to break away from static rules: instead of reacting only to the current incident, it recalls similar past situations, compares what actually worked, and retains every new outcome so future decisions improve.
 
 ---
 
-## 🏛️ The Core Memory Loop
+## The Core Memory Loop
 
 ```text
 TRAFFIC / EMERGENCY EVENT
           ↓
       AI AGENT
           ↓
-  HINDSIGHT RECALL
+      RECALL
      ↙        ↘
 SIMILAR     PAST INTERVENTIONS
 INCIDENTS    + OUTCOMES
@@ -27,109 +27,131 @@ INCIDENTS    + OUTCOMES
           ↓
     GROUND TRUTH
           ↓
-  HINDSIGHT RETAIN
+     RETAIN
           ↓
 FUTURE DECISIONS IMPROVE
 ```
 
 ---
 
-## ⚡ Key Modes
+## Key Modes
 
 ### 1. Routine Traffic Operations
-- **Input**: Corridors, peak hours, weather shocks (rain, fog), incidents (accident, waterlogging, signal failure).
-- **Hindsight Recall**: Retrieves 6–8 closely matched historical episodes under identical environmental conditions.
-- **Intervention Evaluation**: Compares success rates between *Signal Retiming*, *Traffic Diversion*, *Manual Control*, and *Corridor Metering*.
-- **Recommendation**: Proposes the highest-efficacy action backed by quantitative historical proof.
-- **Continuous Learning**: Operators record whether the intervention cleared the queue; the new memory is immediately retained in Hindsight.
+- **Input:** location, day, time, weather, incident type, severity.
+- **Recall:** scores every stored memory by location/zone match, incident type, weather, and day/time similarity, and pulls the top 6–8.
+- **Intervention evaluation:** compares success rates across *Signal retiming*, *Traffic diversion*, *Manual traffic control*, and *Corridor metering*.
+- **Recommendation:** the highest-success intervention among recalled memories, with the historical success ratio shown as evidence.
+- **Continuous learning:** operators record whether the intervention worked; the outcome is retained immediately and counted in future recalls.
 
 ### 2. Emergency Route Intelligence
-- **Input**: Origin crash site, destination hospital (e.g. *Apollo Jubilee Hills*, *CARE Banjara*, *Yashoda Secunderabad*), urgency level, weather.
-- **Hindsight Route Query**: Rather than naive shortest-distance routing, evaluates historical trip records under wet Friday peak conditions.
-- **Route Proof**: Compares Route A (standard Begumpet arterial with frequent signal gridlocks) vs. Route B (Minister Road inner corridor with an 87.5% critical on-time rate).
+- **Input:** origin, destination hospital, urgency, weather.
+- **Route comparison:** evaluates historical trip records per route rather than picking the shortest path.
+- **Example:** Secunderabad → Apollo Jubilee Hills — Route A (9 historical trips, 44% success) vs. Route B (8 historical trips, 87.5% success, ~8 min faster). Route B is recommended on historical performance, not distance.
 
 ### 3. Before vs. After Memory Comparison
 | Without Memory | With TrafficMemory |
 |---|---|
-| **Generic Heuristic**: "Accident detected on main arterial — consider diverting traffic into side lanes." | **Hindsight Grounded**: Recalled 6 similar Friday-rain accidents. Diversion flooded narrow feeder lanes in 2/2 cases. |
-| **Risk**: Secondary residential gridlock and delayed emergency clearance. | **Proven Action**: Apply Signal Retiming first (succeeded in 4/6 comparable cases, halving delay from 22m to 10m). |
+| Generic heuristic: "Accident detected on main arterial — consider diverting traffic." | Recalled similar past accidents and compares actual outcomes for each intervention. |
+| No evidence, same suggestion regardless of history. | Recommends the intervention with the strongest track record for this specific situation, with the numbers shown. |
 
 ---
 
-## 🗺️ Real Hyderabad Geographic Context
-- **Interactive Cartography**: Powered by **MapLibre GL JS** with dark cartographic styling.
-- **5 Operational Zones**:
-  - `SEC`: Secunderabad (Paradise Flyover, MG Road)
-  - `BGP`: Begumpet (Airport Express corridor, Prakash Nagar)
-  - `AMP`: Ameerpet (Maitrivanam, SR Nagar)
-  - `BJH`: Banjara Hills / Jubilee Hills (Road No. 36, Check Post)
-  - `HTC`: HITEC City / Gachibowli (Cyber Towers, ORR Junction)
-- **Top Hospital Emergency Hubs**:
-  - Apollo Hospitals Jubilee Hills
-  - CARE Hospitals Banjara Hills
-  - Yashoda Hospitals Secunderabad
-  - KIMS Hospitals Begumpet
-  - AIG Hospitals Gachibowli
-  - CARE Hospitals HITEC City
+## Geographic Context
+
+- **5 operational zones:** Secunderabad, Begumpet, Ameerpet, Banjara Hills/Jubilee Hills, HITEC City/Gachibowli.
+- **6 hospital destinations:** Apollo Jubilee Hills, CARE Banjara Hills, Yashoda Secunderabad, KIMS Secunderabad/Begumpet, Yashoda Somajiguda, AIG Gachibowli, CARE HITEC City.
+- All zone names and hospital names are real Hyderabad locations used as labels; the incident histories, travel times, and success rates attached to them are **synthetic**, generated for this demo.
 
 ---
 
-## 🧪 Guided 60-Second Demo Scenarios
+## Demo Scenarios
 
-1. **Scenario 01: Rain + Evening Accident at Ameerpet (Friday 6:30 PM)**
-   - Click `DEMO` → `Play Scenario 01`.
-   - Automatically populates the parameters, executes Hindsight recall, reveals 6 past memories, and recommends Signal Retiming (67% success).
-2. **Scenario 02: Critical Ambulance Corridor (Secunderabad → Apollo Jubilee Hills)**
-   - Click `DEMO` → `Play Scenario 02`.
-   - Recalls 17 past ambulance trips under wet evening traffic; highlights recommended Route B on the Hyderabad map.
-3. **Scenario 03: Failed Intervention Learning (Gachibowli ORR Foggy Monday)**
-   - Click `DEMO` → `Play Scenario 03`.
-   - Shows that previous signal retiming attempts failed during dense fog, guiding the agent to pivot to Traffic Diversion via Nanakramguda.
+1. **Rain + evening accident, Ameerpet (Friday 6:30 PM)** — recall retrieves comparable past incidents and recommends signal retiming.
+2. **Critical ambulance corridor, Secunderabad → Apollo Jubilee Hills** — recalls 17 historical trips across two routes and recommends the faster one.
+3. **Failed intervention learning, Gachibowli/ORR (foggy Monday)** — shows signal retiming failing in past fog conditions, so the agent recommends diversion instead.
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## Tech Stack
 
-- **Frontend**: React 19, TypeScript, Vite, Tailwind CSS v4, MapLibre GL JS, Lucide icons.
-- **Backend API**: Node.js & Express with TypeScript (`server.ts`).
-- **Memory Layer**: Clean `MemoryService` abstraction supporting Vectorize's **Hindsight REST API** and a resilient in-process memory engine with 68+ seed memories.
-- **AI Reasoning**: Google GenAI SDK (`@google/genai`) for nuanced operational explanations.
-
----
-
-## 🚀 API Endpoints
-
-- `GET /api/health` — System uptime and Hindsight connection mode.
-- `GET /api/stats` — Real-time telemetry (retained memories, success rates, recall counts).
-- `GET /api/zones` — Operational zones and coordinates.
-- `GET /api/hospitals` — Trauma centers and bed availability.
-- `GET /api/incidents` — Current active incident markers.
-- `GET /api/corridors` — GeoJSON arterial speed lines.
-- `GET /api/memories` — Search and filter retained experiences.
-- `POST /api/analyze` — Trigger Hindsight recall and recommendation generation.
-- `POST /api/emergency` — Evaluate historical corridor travel times for ambulances.
-- `POST /api/outcomes` — Retain ground-truth outcomes to improve future inferences.
-- `POST /api/reset-memories` — Revert memory store to initial seed state.
+- **Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, Lucide icons.
+- **Map:** Google Maps via `@vis.gl/react-google-maps` (`HyderabadGoogleMap.tsx`), wired into the app. Requires `VITE_GOOGLE_MAPS_API_KEY`. `maplibre-gl` is included as a dependency and an unused MapLibre-based map component (`HyderabadMap.tsx`) exists in the repo but is not currently rendered — remove or wire it up, don't claim it as the live map.
+- **Backend:** Node.js + Express + TypeScript (`server.ts`).
+- **Memory layer:** `MemoryService` abstraction. Runs a real in-process recall/retain engine by default; if `HINDSIGHT_URL` and `HINDSIGHT_API_KEY` are set, it also attempts to sync to a live Hindsight instance via `POST /v1/memories` and `GET /v1/health`. **These endpoint shapes are unverified against the live Hindsight API** — confirm against the current docs (https://hindsight.vectorize.io/) before demoing this as a live connection. If the call fails, it silently falls back to the in-process engine, so nothing breaks either way.
+- **AI reasoning:** Google GenAI SDK (`@google/genai`). When `GEMINI_API_KEY` is set, real Gemini calls generate the explanation text, cached per situation; without a key (or on quota errors), a deterministic template explanation is used instead.
 
 ---
 
-## ⚙️ Environment Variables
+## API Endpoints
+
+- `GET /api/health` — system status and current memory mode (`HINDSIGHT_LIVE` or `DEMO_MOCK`).
+- `GET /api/stats` — retained memory count, success rate, recall/retain counters.
+- `GET /api/zones` — operational zones and coordinates.
+- `GET /api/hospitals` — hospital destinations.
+- `GET /api/incidents` — active incident markers.
+- `GET /api/corridors` — corridor geometry.
+- `GET /api/memories` — filterable memory list (zone, location, incident, weather, outcome).
+- `POST /api/analyze` — run recall + recommendation for a traffic incident.
+- `POST /api/emergency` — run historical route comparison for an emergency trip.
+- `POST /api/outcomes` — retain an operator-recorded outcome.
+- `POST /api/reset-memories` — reset the store back to seed data.
+
+---
+
+## Environment Variables
 
 Copy `.env.example` to `.env`:
+
 ```bash
-# Optional: Gemini API Key for dynamic LLM reasoning
+# Optional: enables real Gemini-generated explanations.
+# Without it, a deterministic template explanation is used — nothing breaks.
 GEMINI_API_KEY="your-api-key"
 
-# Optional: Vectorize Hindsight credentials
+# Optional: syncs retained memories to a live Hindsight instance.
+# Without it, the built-in in-process memory engine is used.
 HINDSIGHT_URL="https://api.hindsight.vectorize.io"
 HINDSIGHT_API_KEY="your-hindsight-key"
 
-# Port
+# Required for the map view to render.
+VITE_GOOGLE_MAPS_API_KEY="your-google-maps-key"
+
 PORT=3000
 ```
-*Note: If Hindsight or Gemini keys are not configured, TrafficMemory runs seamlessly in high-fidelity `DEMO / MOCK MEMORY` mode with zero broken features.*
+
+## Setup
+
+```bash
+npm install    # or bun install
+cp .env.example .env   # fill in the keys you have
+npm run dev             # starts the Express + Vite server on :3000
+```
 
 ---
 
-## ⚠️ Synthetic Data Disclaimer
-All traffic incident histories, emergency run times, and corridor metrics are synthetic datasets created for demonstration and research purposes in Hyderabad.
+## Current status (honest)
+
+| Piece | Status |
+|---|---|
+| Frontend (all views: Overview, Traffic, Emergency, Memory Explorer, Intelligence, Demo) | ✅ Built and working |
+| Backend API (all 11 endpoints) | ✅ Built and working |
+| Recall/retain logic (similarity scoring, success-rate ranking) | ✅ Built and working, in-process by default |
+| Gemini-generated explanations | ✅ Real, when `GEMINI_API_KEY` is set; deterministic fallback otherwise |
+| Google Maps view | ✅ Wired and working, needs `VITE_GOOGLE_MAPS_API_KEY` |
+| MapLibre map | ⚠️ Dependency and component present, not currently used |
+| Live Hindsight sync | ⚠️ Code exists, endpoint shapes unverified against live docs, not confirmed working end to end |
+| Traffic/route data | Synthetic — 24 seed memories, real place names |
+
+---
+
+## Limitations
+
+- Seed dataset is small (24 memories) — success rates from 4–8 samples are illustrative, not statistically robust.
+- Live Hindsight sync is unverified; treat `DEMO_MOCK` mode as the tested path for the hackathon demo.
+- No live traffic feed, signal control, or dispatch integration — this is a decision-support prototype, not a control system.
+
+## Future Scope
+
+- Verify and finish the live Hindsight integration against current API docs.
+- Expand seed data for stronger statistical confidence.
+- Wire or remove the unused MapLibre component.
+- Add live traffic/incident feeds.
