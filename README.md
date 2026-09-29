@@ -1,11 +1,22 @@
-<div align="center">
+# 🚦 TrafficMemory
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+### An AI Agent That Remembers What Actually Works on the Road
 
-  <h1>Built with AI Studio</h2>
+TrafficMemory is an AI-powered traffic intelligence system that uses
+persistent episodic memory to learn from past traffic, weather,
+accident, and intervention outcomes.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## 🧠 How It Works
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+Incident → Recall Past Experiences → Compare Actions → Recommend
+Proven Action → Retain Outcome → Improve Future Decisions
 
-</div>
+## 🚀 Features
+
+- Persistent traffic memory
+- Hindsight-based reasoning
+- Smart route recommendations
+- Emergency corridor optimization
+- Hyderabad traffic intelligence
+- Live map visualization
+- Before vs After intervention analysis
