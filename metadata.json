@@ -1,0 +1,6 @@
+{
+  "name": "TrafficMemory",
+  "description": "An AI Agent That Remembers What Actually Works on the Road. Persistent traffic intelligence using Hindsight memory for traffic operations and emergency routing in Hyderabad.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
